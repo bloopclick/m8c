@@ -4,6 +4,7 @@
 #include "config.h"
 #include "ini.h"
 #include <SDL.h>
+#include <assert.h>
 
 /* Case insensitive string compare from ini.h library */
 static int strcmpci(const char *a, const char *b) {
@@ -71,8 +72,10 @@ void write_config(config_params_s *conf) {
 
   SDL_Log("Writing config file to %s", config_path);
 
+  const uint INI_LINE_COUNT = 36;
+
   // Entries for the config file
-  char ini_values[35][50];
+  char ini_values[INI_LINE_COUNT][50];
   int initPointer = 0;
   sprintf(ini_values[initPointer++], "[graphics]\n");
   sprintf(ini_values[initPointer++], "fullscreen=%s\n",
@@ -120,6 +123,9 @@ void write_config(config_params_s *conf) {
           conf->gamepad_analog_axis_opt);
   sprintf(ini_values[initPointer++], "gamepad_analog_axis_edit=%d\n",
           conf->gamepad_analog_axis_edit);
+
+  // Ensure we aren't writing off the end of the array
+  assert(initPointer-2 == INI_LINE_COUNT);
 
   if (rw != NULL) {
     // Write ini_values array to config file
