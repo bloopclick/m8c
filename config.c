@@ -125,7 +125,7 @@ void write_config(config_params_s *conf) {
           conf->gamepad_analog_axis_edit);
 
   // Ensure we aren't writing off the end of the array
-  assert(initPointer-2 == INI_LINE_COUNT);
+  assert(initPointer-1 == INI_LINE_COUNT);
 
   if (rw != NULL) {
     // Write ini_values array to config file
