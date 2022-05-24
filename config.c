@@ -72,7 +72,7 @@ void write_config(config_params_s *conf) {
 
   SDL_Log("Writing config file to %s", config_path);
 
-  const uint INI_LINE_COUNT = 36;
+  const unsigned int INI_LINE_COUNT = 36;
 
   // Entries for the config file
   char ini_values[INI_LINE_COUNT][50];
@@ -125,11 +125,11 @@ void write_config(config_params_s *conf) {
           conf->gamepad_analog_axis_edit);
 
   // Ensure we aren't writing off the end of the array
-  assert(initPointer-1 == INI_LINE_COUNT);
+  assert(initPointer == INI_LINE_COUNT);
 
   if (rw != NULL) {
     // Write ini_values array to config file
-    for (int i = 0; i < 34; i++) {
+    for (int i = 0; i < INI_LINE_COUNT; i++) {
       size_t len = SDL_strlen(ini_values[i]);
       if (SDL_RWwrite(rw, ini_values[i], 1, len) != len) {
         SDL_LogDebug(SDL_LOG_CATEGORY_SYSTEM,
